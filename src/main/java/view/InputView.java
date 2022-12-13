@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import camp.nextstep.edu.missionutils.Console;
 
@@ -47,20 +47,20 @@ public class InputView {
     }
 
     public void validBridgeSize(String size) {
-        if (Valid.isEmpty(size)) throw new IllegalArgumentException("[ERROR] 3-20 사이의 다리 길이를 입력해 주세요.");
-        if (Valid.isLetter(size)) throw new IllegalArgumentException("[ERROR] 다리 길이는 숫자만 입력해 주세요.");
-        if (Valid.isNumberNotInRange(size)) throw new IllegalArgumentException("[ERROR] 3-20 사이의 숫자를 입력해 주세요. ");
+        if (Valid.isEmpty(size)) throw new IllegalArgumentException(ValidMessage.sizeEmpty.getMessage());
+        if (Valid.isLetter(size)) throw new IllegalArgumentException(ValidMessage.sizeNumber.getMessage());
+        if (Valid.isNumberNotInRange(size)) throw new IllegalArgumentException(ValidMessage.sizeRange.getMessage());
     }
 
     public void validMoving(String move) {
-        if (Valid.isEmpty(move)) throw new IllegalArgumentException("[ERROR] U or D 중 하나를 입력해 주세요.");
-        if (Valid.isNumber(move)) throw new IllegalArgumentException("[ERROR] 문자 U or D 만 입력해 주세요.");
-        if (Valid.isNotMoveLetter(move)) throw new IllegalArgumentException("[ERROR] U와 D만 입력 가능 합니다.");
+        if (Valid.isEmpty(move)) throw new IllegalArgumentException(ValidMessage.moveEmpty.getMessage());
+        if (Valid.isNumber(move)) throw new IllegalArgumentException(ValidMessage.moveLetter.getMessage());
+        if (Valid.isNotMoveLetter(move)) throw new IllegalArgumentException(ValidMessage.moveRange.getMessage());
     }
 
     public void validCommand(String command) {
-        if (Valid.isEmpty(command)) throw new IllegalArgumentException("[ERROR] R or Q 중 하나를 입력해 주세요.");
-        if (Valid.isNumber(command)) throw new IllegalArgumentException("[ERROR] 문자 R or Q 만 입력해 주세요.");
-        if (Valid.isNotCommandLetter(command)) throw new IllegalArgumentException("[ERROR] R과 Q만 입력 가능 합니다.");
+        if (Valid.isEmpty(command)) throw new IllegalArgumentException(ValidMessage.finishEmpty.getMessage());
+        if (Valid.isNumber(command)) throw new IllegalArgumentException(ValidMessage.finishLetter.getMessage());
+        if (Valid.isNotCommandLetter(command)) throw new IllegalArgumentException(ValidMessage.finishRange.getMessage());
     }
 }
