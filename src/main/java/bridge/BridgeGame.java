@@ -1,23 +1,84 @@
 package bridge;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 다리 건너기 게임을 관리하는 클래스
  */
 public class BridgeGame {
 
-    /**
-     * 사용자가 칸을 이동할 때 사용하는 메서드
-     * <p>
-     * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void move() {
+    private final BridgeNumberGenerator bridgeNumberGenerator = new BridgeRandomNumberGenerator();
+
+    private final BridgeMaker bridgeMaker = new BridgeMaker(bridgeNumberGenerator);
+
+    private final List<String> answerBridge;
+
+    private final List<String> upMap;
+
+    private final List<String> downMap;
+
+    private int count;
+
+    private int index;
+
+    public BridgeGame(int size) {
+        this.answerBridge = bridgeMaker.makeBridge(size);
+        this.upMap = new ArrayList<>();
+        this.downMap = new ArrayList<>();
+        this.count = 1;
+        this.index = 0;
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
-     * <p>
-     * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
+    public List<String> getUpMap() {
+        return this.upMap;
+    }
+
+    public List<String> getDownMap() {
+        return this.downMap;
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
+    public int getIndex() {
+        return this.index;
+    }
+
+    public boolean isSameValue(String input) {
+        return answerBridge.get(index).equals(input);
+    }
+
+    public void drawSuccessMap(String input) {
+        if (input.equals("U")) {
+            this.upMap.add(" O ");
+            this.downMap.add("   ");
+            return;
+        }
+        this.upMap.add("   ");
+        this.downMap.add(" O ");
+    }
+
+    public void drawFailMap(String input) {
+        if (input.equals("U")) {
+            this.upMap.add(" X ");
+            this.downMap.add("   ");
+            return;
+        }
+        this.upMap.add("   ");
+        this.downMap.add(" X ");
+    }
+
+    public void move() {
+        this.index += 1;
+    }
+
+
     public void retry() {
+        this.index = 0;
+        this.upMap.clear();
+        this.downMap.clear();
+        this.count++;
     }
 }
