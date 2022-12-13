@@ -1,13 +1,17 @@
 package bridge;
 
-import View.InputView;
-import View.OutputView;
+import bridgeModel.BridgeDraw;
+import bridgeModel.BridgeGame;
+import view.InputView;
+import view.OutputView;
 
 public class BridgeGameController {
 
     private final InputView inputView = new InputView();
 
     private final OutputView outputView = new OutputView();
+
+    private final BridgeDraw bridgeDraw = new BridgeDraw();
 
     private BridgeGame bridgeGame;
 
@@ -27,26 +31,31 @@ public class BridgeGameController {
     }
 
     public void handleSame(int size, String input) {
-        bridgeGame.drawSuccessMap(input);
+        bridgeDraw.drawSuccessMap(input);
         if (bridgeGame.getIndex() == size-1) {
-            outputView.printResult(bridgeGame.getUpMap(), bridgeGame.getDownMap(), bridgeGame.getCount());
+            outputView.printResult(bridgeDraw.getUpMap(), bridgeDraw.getDownMap(), bridgeGame.getCount());
             return;
         }
-        outputView.printMap(bridgeGame.getUpMap(), bridgeGame.getDownMap());
+        outputView.printMap(bridgeDraw.getUpMap(), bridgeDraw.getDownMap());
         bridgeGame.move();
         this.handleMoving(size);
     }
 
     public void handleDiff(int size, String input) {
-        bridgeGame.drawFailMap(input);
-        outputView.printMap(bridgeGame.getUpMap(), bridgeGame.getDownMap());
+        bridgeDraw.drawFailMap(input);
+        outputView.printMap(bridgeDraw.getUpMap(), bridgeDraw.getDownMap());
         String finishCommand = inputView.readGameCommand();
         if (finishCommand.equals("R")) {
-            bridgeGame.retry();
-            this.handleMoving(size);
+            handleRestart(size);
             return;
         }
-        outputView.printFailResult(bridgeGame.getUpMap(), bridgeGame.getDownMap(), bridgeGame.getCount());
+        outputView.printFailResult(bridgeDraw.getUpMap(), bridgeDraw.getDownMap(), bridgeGame.getCount());
+    }
+
+    public void handleRestart(int size) {
+        bridgeGame.retry();
+        bridgeDraw.clear();
+        this.handleMoving(size);
     }
 
     public void handleMoving(int size) {
